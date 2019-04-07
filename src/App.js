@@ -169,7 +169,8 @@ getDeckId = clickedDeckId => {
          : null}
 
          {this.state.decks && this.state.deckCards ?
-           <AllDecks currentDeckId={this.state.currentDeckId} allDecks={this.state.decks} allDeckCards={this.state.deckCards} getDeckId={this.getDeckId}/>
+           <AllDecks currentDeckId={this.state.currentDeckId} allDecks={this.state.decks} allDeckCards={this.state.deckCards} getDeckId={this.getDeckId}
+            />
          : null}
 
       </div>

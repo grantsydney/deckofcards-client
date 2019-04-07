@@ -16,15 +16,19 @@ import styled from 'styled-components'
 
 const Deck = (props) => {
   let selectDeck = (event) => {
-    // debugger
-    props.getDeckId(props.deck.id);
+    if(event.target.dataset.id === "2" || event.target.dataset.id === "0"){
+      alert('Not enough cards to draw. Please choose another deck, or create a new one')
+    } else{
+      props.getDeckId(props.deck.id);
+    }
+
   }
 console.log(props);
   return (
 
   <div style={{border:'1px solid pink', width:'40%'}} onClick={selectDeck}>
     <p>{props.deck.id}</p>
-    <p>{renderExistingCards(props.allDeckCards, props.deck.id)}</p>
+    <p data-id={renderExistingCards(props.allDeckCards, props.deck.id)}>{renderExistingCards(props.allDeckCards, props.deck.id)}</p>
 
 
 
