@@ -6,12 +6,11 @@ const Card = (props) => {
 
 
   const CardContainer = styled.div`
-  border:1px solid pink;
   height: 200px;
   width:70%;
   margin:auto;
   padding-left:10%;
-  margin-top:10%;
+  margin-top:3%;
 `;
 
 

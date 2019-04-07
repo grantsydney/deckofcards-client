@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Card from './components/Card'
+import Deck from './components/Deck'
 import styled from 'styled-components'
 
 
@@ -17,22 +18,23 @@ const NewDeckButton = styled.button`
   margin:auto;
 `;
 
-const ErrorMessage = styled.p`
+const ErrorMessage = styled.div`
   font-size:1.3em;
   color:#545B56;
   font-family: 'Kalam', cursive;
+  margin-top:2%;
 `;
 
-const DrawCardsButton = styled.button`
+const DrawCardsButton = styled.div`
+  text-align: center;
+  border: 1px solid #000;
+  width: 150px;
+  height: 200px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   border-radius: 5px;
-  width:10%;
-  height:7%;
-  font-size:1em;
-  color:#545B56;
-  font-family: 'Kalam', cursive;
   margin:auto;
+  margin-top:2%;
 `;
 
 
@@ -45,7 +47,7 @@ class App extends Component {
     currentFiveCards: []
   }
 
-  //fetch deck data and set State
+  //fetch deck and card data and set State
   componentDidMount() {
     fetch(`http://localhost:3000/api/v1/decks`)
       .then(r => r.json())
@@ -60,13 +62,6 @@ class App extends Component {
         })
   }
 
-  addDeck = (deck) => {
-    console.log(deck);
-    this.setState({
-      decks: [...this.state.decks, deck],
-      currentFiveCards: []
-    })
-  }
 
   newDeck = () => {
     console.log("new deck!");
@@ -90,12 +85,20 @@ class App extends Component {
 
   }
 
+  //adds new deck to decks in state, resets current cards to empty array
+  addDeck = (deck) => {
+    this.setState({
+      decks: [...this.state.decks, deck],
+      currentFiveCards: []
+    })
+  }
+
+
   createDeckCards = (id) => {
-    fetch(`http://localhost:3000/api/v1/new_deck_cards?id=${id}`, {
+    fetch(`http://localhost:3000/api/v1/new?id=${id}`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-
       })
     })
   }
@@ -132,6 +135,10 @@ class App extends Component {
 
         {this.state.currentFiveCards.length === 5 ?
             <Card currentCards={this.state.currentFiveCards} allCards={this.state.cards}/>
+         : null}
+
+         {this.state.decks ?
+           <Deck currentDeckId={this.state.currentDeckId} allDecks={this.state.decks}/>
          : null}
 
       </div>
