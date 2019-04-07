@@ -1,6 +1,40 @@
 import React, { Component } from 'react';
 import './App.css';
 import Card from './components/Card'
+import styled from 'styled-components'
+
+
+//*******************STYLED COMPONENTS****************//
+const NewDeckButton = styled.button`
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  width:10%;
+  height:7%;
+  font-size:1.3em;
+  color:#545B56;
+  font-family: 'Kalam', cursive;
+  margin:auto;
+`;
+
+const ErrorMessage = styled.p`
+  font-size:1.3em;
+  color:#545B56;
+  font-family: 'Kalam', cursive;
+`;
+
+const DrawCardsButton = styled.button`
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  width:10%;
+  height:7%;
+  font-size:1em;
+  color:#545B56;
+  font-family: 'Kalam', cursive;
+  margin:auto;
+`;
+
 
 class App extends Component {
 
@@ -25,8 +59,6 @@ class App extends Component {
           this.setState({ cards: cardData }, ()=>console.log(this.state.cards))
         })
   }
-
-
 
   addDeck = (deck) => {
     console.log(deck);
@@ -56,8 +88,7 @@ class App extends Component {
       })
     })
 
-
-}
+  }
 
   createDeckCards = (id) => {
     fetch(`http://localhost:3000/api/v1/new_deck_cards?id=${id}`, {
@@ -66,19 +97,9 @@ class App extends Component {
       body: JSON.stringify({
 
       })
-
     })
   }
 
-
-  // drawCards = () => {
-  //   fetch(`http://localhost:3000/api/v1/draw?id=${this.state.currentDeckId}`)
-  //     .then(r => r.json())
-  //     .then(deckData => {
-  //       console.log(deckData)
-  //     })
-  //
-  // }
 
   drawFiveCardsButton = () => {
     fetch(`http://localhost:3000/api/v1/deck/${this.state.currentDeckId}/draw`)
@@ -95,18 +116,19 @@ class App extends Component {
       return 'No cards to draw, please select new deck'
     }
     else{
-      return <button onClick={this.drawFiveCardsButton}>draw 5 cards</button>
+      return <DrawCardsButton onClick={this.drawFiveCardsButton}>draw 5 cards</DrawCardsButton>
     }
-
   }
+
+
 
   render() {
     return (
       <div className="App">
 
-        <button onClick={this.newDeck}>new deck</button>
+        <NewDeckButton onClick={this.newDeck}>new deck</NewDeckButton>
 
-        {this.displayDrawButton(this.state.currentDeckId, this.state.currentFiveCards.length)}
+        <ErrorMessage>{this.displayDrawButton(this.state.currentDeckId, this.state.currentFiveCards.length)}</ErrorMessage>
 
         {this.state.currentFiveCards.length === 5 ?
             <Card currentCards={this.state.currentFiveCards} allCards={this.state.cards}/>
