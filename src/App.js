@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Card from './components/Card'
 import Deck from './components/Deck'
+import AllDecks from './components/AllDecks'
 import styled from 'styled-components'
 
 
@@ -60,6 +61,13 @@ class App extends Component {
         .then(cardData => {
           this.setState({ cards: cardData }, ()=>console.log(this.state.cards))
         })
+
+      //fetch deck_cards data
+      fetch(`http://localhost:3000/api/v1/deck_cards`)
+        .then(r => r.json())
+        .then(dc => {
+          this.setState({ deckCards: dc }, ()=>console.log(this.state.deckCards))
+      })
   }
 
 
@@ -77,10 +85,14 @@ class App extends Component {
     .then(d => {
       console.log(d.id)
       this.addDeck(d)
-      this.createDeckCards(d.id)
+      this.createDeckCards()
       this.setState({
         currentDeckId: d.id
       })
+      // this.createDeckCards(d.id)
+      // this.setState({
+      //   currentDeckId: d.id
+      // })
     })
 
   }
@@ -94,14 +106,23 @@ class App extends Component {
   }
 
 
-  createDeckCards = (id) => {
-    fetch(`http://localhost:3000/api/v1/new?id=${id}`, {
+  createDeckCards(){
+    fetch(`http://localhost:3000/api/v1/new`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
       })
     })
   }
+
+  // createDeckCards = (id) => {
+  //   fetch(`http://localhost:3000/api/v1/new?id=${id}`, {
+  //     method: 'POST',
+  //     headers: {'Content-Type': 'application/json'},
+  //     body: JSON.stringify({
+  //     })
+  //   })
+  // }
 
 
   drawFiveCardsButton = () => {
@@ -123,6 +144,16 @@ class App extends Component {
     }
   }
 
+  selectDeck = (event) => {
+
+  }
+
+  //find deck by id
+getDeckId = clickedDeckId => {
+  this.setState({
+    currentDeckId: clickedDeckId
+  }, console.log(this.state.currentDeckId))
+}
 
 
   render() {
@@ -137,8 +168,8 @@ class App extends Component {
             <Card currentCards={this.state.currentFiveCards} allCards={this.state.cards}/>
          : null}
 
-         {this.state.decks ?
-           <Deck currentDeckId={this.state.currentDeckId} allDecks={this.state.decks}/>
+         {this.state.decks && this.state.deckCards ?
+           <AllDecks currentDeckId={this.state.currentDeckId} allDecks={this.state.decks} allDeckCards={this.state.deckCards} getDeckId={this.getDeckId}/>
          : null}
 
       </div>
