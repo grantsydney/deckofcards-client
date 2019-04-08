@@ -32,13 +32,15 @@ const DrawCardsButton = styled.div `
     margin-top:2%;
   `;
 
-//***fn to determine num cards remaining in decks that haven't been drawn***//
-
 class Deck extends Component {
+
+
 
   state = {
     remainder: 0
   }
+
+  //***fn to determine num cards remaining in decks that haven't been drawn***//
 
   // getRemainder = () => {
   //   fetch(`http://localhost:3000/api/v1/deck/${this.props.deck.id}/remaining`)
@@ -53,11 +55,6 @@ class Deck extends Component {
   // }
 
 
-  handleClick = (event) => {
-    this.setState({
-      render: !this.state.render
-    })
-  }
 
   renderExistingCards = (allDeckCards, deckId) => {
     let numCardsRemaining = 0;
@@ -72,10 +69,11 @@ class Deck extends Component {
   selectDeck = (event) => {
 
     if (event.target.dataset.id === "2" || event.target.dataset.id === "0") {
-      alert('Not enough cards to draw. Please choose another deck, or create a new one')
+      alert('Not enough cards to draw. Please select another deck, or draw a new one.')
     } else {
 
       this.props.getDeckId(this.props.deck.id);
+
       return <DrawCardsButton onClick={this.props.drawFiveCardsButton}>draw 5 cards</DrawCardsButton>
     }
 
@@ -91,7 +89,7 @@ class Deck extends Component {
           width: '100%'
         }} data-id={this.renderExistingCards(this.props.allDeckCards, this.props.deck.id)}/>
 
-      <p data-id={this.renderExistingCards(this.props.allDeckCards, this.props.deck.id)}>{this.renderExistingCards(this.props.allDeckCards, this.props.deck.id)}</p>
+      <p data-id={this.renderExistingCards(this.props.allDeckCards, this.props.deck.id)}></p>
 
       </SingleDeck>);
   }

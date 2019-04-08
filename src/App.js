@@ -87,7 +87,6 @@ class App extends Component {
     currentFiveCards: [],
     deckCards:[],
     newCardAmount: true,
-    remainder:0
   }
 
 
@@ -146,15 +145,6 @@ class App extends Component {
     })
   }
 
-  // createDeckCards(){
-  // fetch(`http://localhost:3000/api/v1/new`, {
-  //   method: 'POST',
-  //   headers: {'Content-Type': 'application/json'},
-  //   body: JSON.stringify({
-  //   })
-  // })
-  //
-  // }
 
   //***fetch 5 random cards from current selected deck***//
   drawFiveCardsButton = () => {
@@ -165,24 +155,13 @@ class App extends Component {
       })
   }
 
-  getRemainder = () => {
-    fetch(`http://localhost:3000/api/v1/deck/${this.state.currentDeckId}/remaining`)
-      .then(r => r.json())
-
-      .then(re => {
-        this.setState({
-          remainder: re.length
-        },()=>console.log(this.state.remainder))
-
-      })
-  }
 
   //***fn to determine when to display draw button***//
   displayDrawButton(deckId, currentCards) {
     if (deckId === '') {
-      return 'No cards to draw, please select an existing deck or draw a new one'
+      return 'No cards to draw, please select an existing deck or draw a new one.'
     } else if(currentCards === 2){
-      return 'No cards to draw, please select an existing deck or draw a new one'
+      return 'No cards to draw, please select an existing deck or draw a new one.'
     } else if(deckId !== ''){
       return <DrawCardsButton onClick={this.drawFiveCardsButton}>draw 5 cards</DrawCardsButton>
     }
@@ -194,9 +173,8 @@ class App extends Component {
   //***set current deck id in state***//
   getDeckId = clickedDeckId => {
     this.setState({
-      currentDeckId: clickedDeckId,
-      newCardAmount: !this.state.newCardAmount
-    }, console.log(this.state.currentDeckId))
+      currentDeckId: clickedDeckId
+    })
   }
 
 
