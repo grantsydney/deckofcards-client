@@ -5,7 +5,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Install
 $ git clone https://github.com/sg3957/deckofcards-client.git
+
 $ cd deckofcards-client
+
 $ npm install
 
 ## Start & watch
