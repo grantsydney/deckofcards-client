@@ -3,7 +3,9 @@ import './App.css';
 import Card from './components/Card'
 import Deck from './components/Deck'
 import AllDecks from './components/AllDecks'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+
 
 
 //*******************STYLED COMPONENTS****************//
@@ -56,6 +58,25 @@ const DrawCardsButton = styled.div`
 }
 `;
 
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+// Here we create a component that will rotate everything we pass in over two seconds
+const Rotate = styled.div`
+  display: inline-block;
+  animation: ${rotate} 7s linear infinite;
+  padding: 2rem 1rem;
+  font-size:4em;
+
+`;
+
 
 class App extends Component {
 
@@ -65,6 +86,7 @@ class App extends Component {
     currentDeckId: '',
     currentFiveCards: [],
     deckCards:[],
+    newCardAmount: true
   }
 
 
@@ -92,7 +114,7 @@ class App extends Component {
   //***create new deck***//
   newDeck = () => {
     console.log("new deck!");
-    fetch('http://localhost:3000/api/v1/decks', {
+    fetch('http://localhost:3000/api/v1/new', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -104,9 +126,11 @@ class App extends Component {
     .then(d => {
       console.log(d.id)
       this.addDeck(d)
+
       this.setState({
         currentDeckId: d.id
       })
+
     })
 
   }
@@ -118,6 +142,16 @@ class App extends Component {
       currentFiveCards: []
     })
   }
+
+  // createDeckCards(){
+  // fetch(`http://localhost:3000/api/v1/new`, {
+  //   method: 'POST',
+  //   headers: {'Content-Type': 'application/json'},
+  //   body: JSON.stringify({
+  //   })
+  // })
+  //
+  // }
 
   //***fetch 5 random cards from current selected deck***//
   drawFiveCardsButton = () => {
@@ -145,7 +179,8 @@ class App extends Component {
   //***set current deck id in state***//
   getDeckId = clickedDeckId => {
     this.setState({
-      currentDeckId: clickedDeckId
+      currentDeckId: clickedDeckId,
+      newCardAmount: !this.state.newCardAmount
     }, console.log(this.state.currentDeckId))
   }
 
@@ -153,11 +188,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Rotate>
+        &spades;
+        </Rotate>
 
         {this.state.decks && this.state.deckCards ?
           <AllDecks
             currentDeckId={this.state.currentDeckId} allDecks={this.state.decks} allDeckCards={this.state.deckCards} getDeckId={this.getDeckId}
             drawFiveCardsButton={this.drawFiveCardsButton}
+            newCardAmount={this.newCardAmount}
            />
         : null}
 

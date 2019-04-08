@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components'
 
 //***Deck Styled Components***//
@@ -33,41 +33,56 @@ const DrawCardsButton = styled.div `
   `;
 
 //***fn to determine num cards remaining in decks that haven't been drawn***//
-let renderExistingCards = (allDeckCards, deckId) => {
-  let numCardsRemaining = 0;
-  allDeckCards.map(deckCard => {
-    if (deckCard.deck_id === deckId && deckCard.drawn === false) {
-      numCardsRemaining += 1;
-    }
-  })
-  return numCardsRemaining
-}
 
-const Deck = (props) => {
+class Deck extends Component {
 
-  let selectDeck = (event) => {
+  state = {
+    render: true
+  }
+
+
+  handleClick = (event) => {
+    this.setState({
+      render: !this.state.render
+    })
+  }
+
+  renderExistingCards = (allDeckCards, deckId) => {
+    let numCardsRemaining = 0;
+    allDeckCards.map(deckCard => {
+      if (deckCard.deck_id === deckId && deckCard.drawn === false) {
+        numCardsRemaining += 1;
+      }
+    })
+    return numCardsRemaining
+  }
+
+  selectDeck = (event) => {
 
     if (event.target.dataset.id === "2" || event.target.dataset.id === "0") {
       alert('Not enough cards to draw. Please choose another deck, or create a new one')
     } else {
 
-      props.getDeckId(props.deck.id);
-      return <DrawCardsButton onClick={props.drawFiveCardsButton}>draw 5 cards</DrawCardsButton>
+      this.props.getDeckId(this.props.deck.id);
+      return <DrawCardsButton onClick={this.props.drawFiveCardsButton}>draw 5 cards</DrawCardsButton>
     }
 
   }
-  console.log(props);
-  return (<SingleDeck onClick={selectDeck}>
 
-    <DeckId>{props.deck.id}</DeckId>
-    <img src={`./assets/card_back.png`} alt='card_back' style={{
-        height: '100%',
-        width: '100%'
-      }} data-id={renderExistingCards(props.allDeckCards, props.deck.id)}/>
+  render(){
 
-    <p data-id={renderExistingCards(props.allDeckCards, props.deck.id)}></p>
+    return (<SingleDeck onClick={this.selectDeck}>
 
-  </SingleDeck>);
+      <DeckId>{this.props.deck.id}</DeckId>
+      <img src={`./assets/card_back.png`} alt='card_back' style={{
+          height: '100%',
+          width: '100%'
+        }} data-id={this.renderExistingCards(this.props.allDeckCards, this.props.deck.id)}/>
+
+      <p data-id={this.renderExistingCards(this.props.allDeckCards, this.props.deck.id)}>{this.renderExistingCards(this.props.allDeckCards, this.props.deck.id)}</p>
+
+      </SingleDeck>);
+  }
 };
 
 export default Deck;

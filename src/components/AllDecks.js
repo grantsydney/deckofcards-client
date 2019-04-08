@@ -3,7 +3,7 @@ import Deck from './Deck'
 import styled from 'styled-components'
 
 const DeckContainer = styled.div `
-  margin-top:15%;
+
 `;
 
 
