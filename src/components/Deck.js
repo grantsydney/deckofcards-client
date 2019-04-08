@@ -37,8 +37,20 @@ const DrawCardsButton = styled.div `
 class Deck extends Component {
 
   state = {
-    render: true
+    remainder: 0
   }
+
+  // getRemainder = () => {
+  //   fetch(`http://localhost:3000/api/v1/deck/${this.props.deck.id}/remaining`)
+  //     .then(r => r.json())
+  //
+  //     .then(re => {
+  //       this.setState({
+  //         remainder: re.length
+  //       },()=>console.log(this.state.remainder))
+  //
+  //     })
+  // }
 
 
   handleClick = (event) => {

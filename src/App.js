@@ -86,7 +86,8 @@ class App extends Component {
     currentDeckId: '',
     currentFiveCards: [],
     deckCards:[],
-    newCardAmount: true
+    newCardAmount: true,
+    remainder:0
   }
 
 
@@ -95,13 +96,13 @@ class App extends Component {
     fetch(`http://localhost:3000/api/v1/decks`)
       .then(r => r.json())
       .then(deckData => {
-        this.setState({ decks: deckData }, ()=>console.log(this.state.decks))
+        this.setState({ decks: deckData })
       })
 
     fetch(`http://localhost:3000/api/v1/cards`)
       .then(r => r.json())
       .then(cardData => {
-        this.setState({ cards: cardData }, ()=>console.log(this.state.cards))
+        this.setState({ cards: cardData })
       })
 
     fetch(`http://localhost:3000/api/v1/deck_cards`)
@@ -113,7 +114,7 @@ class App extends Component {
 
   //***create new deck***//
   newDeck = () => {
-    console.log("new deck!");
+    // console.log("new deck!");
     fetch('http://localhost:3000/api/v1/new', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -124,7 +125,9 @@ class App extends Component {
     })
     .then(r=>r.json())
     .then(d => {
-      console.log(d.id)
+      // console.log(d.id)
+      console.log(d)
+
       this.addDeck(d)
 
       this.setState({
@@ -159,6 +162,18 @@ class App extends Component {
       .then(r => r.json())
       .then(deckCards => {
         this.setState({ currentFiveCards: deckCards }, ()=>console.log(this.state.currentFiveCards))
+      })
+  }
+
+  getRemainder = () => {
+    fetch(`http://localhost:3000/api/v1/deck/${this.state.currentDeckId}/remaining`)
+      .then(r => r.json())
+
+      .then(re => {
+        this.setState({
+          remainder: re.length
+        },()=>console.log(this.state.remainder))
+
       })
   }
 
