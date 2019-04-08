@@ -43,7 +43,7 @@ class Deck extends Component {
   //***fn to determine num cards remaining in decks that haven't been drawn***//
 
   // getRemainder = () => {
-  //   fetch(`http://localhost:3000/api/v1/deck/${this.props.deck.id}/remaining`)
+  //   fetch(`http://localhost:3001/api/v1/deck/${this.props.deck.id}/remaining`)
   //     .then(r => r.json())
   //
   //     .then(re => {

@@ -92,19 +92,19 @@ class App extends Component {
 
   //***fetch data and set state***//
   componentDidMount() {
-    fetch(`http://localhost:3000/api/v1/decks`)
+    fetch(`http://localhost:3001/api/v1/decks`)
       .then(r => r.json())
       .then(deckData => {
         this.setState({ decks: deckData })
       })
 
-    fetch(`http://localhost:3000/api/v1/cards`)
+    fetch(`http://localhost:3001/api/v1/cards`)
       .then(r => r.json())
       .then(cardData => {
         this.setState({ cards: cardData })
       })
 
-    fetch(`http://localhost:3000/api/v1/deck_cards`)
+    fetch(`http://localhost:3001/api/v1/deck_cards`)
       .then(r => r.json())
       .then(dc => {
         this.setState({ deckCards: dc }, ()=>console.log(this.state.deckCards))
@@ -114,7 +114,7 @@ class App extends Component {
   //***create new deck***//
   newDeck = () => {
     // console.log("new deck!");
-    fetch('http://localhost:3000/api/v1/new', {
+    fetch('http://localhost:3001/api/v1/new', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -148,7 +148,7 @@ class App extends Component {
 
   //***fetch 5 random cards from current selected deck***//
   drawFiveCardsButton = () => {
-    fetch(`http://localhost:3000/api/v1/deck/${this.state.currentDeckId}/draw`)
+    fetch(`http://localhost:3001/api/v1/deck/${this.state.currentDeckId}/draw`)
       .then(r => r.json())
       .then(deckCards => {
         this.setState({ currentFiveCards: deckCards }, ()=>console.log(this.state.currentFiveCards))
