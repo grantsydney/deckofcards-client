@@ -14,9 +14,9 @@ $ npm install
 $ npm start
 
 ## Languages and Tools
-React
-Custom CSS
-Custom graphics
+* React
+* Custom CSS
+* Custom graphics
 
 ## Backend
 https://github.com/sg3957/deckofcards-client
