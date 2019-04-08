@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import Card from './components/Card'
-import Deck from './components/Deck'
 import AllDecks from './components/AllDecks'
 import styled, { keyframes } from 'styled-components'
 
@@ -107,7 +106,7 @@ class App extends Component {
     fetch(`http://localhost:3001/api/v1/deck_cards`)
       .then(r => r.json())
       .then(dc => {
-        this.setState({ deckCards: dc }, ()=>console.log(this.state.deckCards))
+        this.setState({ deckCards: dc })
       })
     }
 
