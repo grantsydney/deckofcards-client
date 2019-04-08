@@ -19,4 +19,4 @@ $ npm start
 * Custom graphics
 
 ## Backend
-https://github.com/sg3957/deckofcards-client
+https://github.com/sg3957/deckofcards-backend
